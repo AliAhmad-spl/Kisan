@@ -156,7 +156,7 @@
                     <th>Name</th>
                     <th>E-mail</th>
                     <th>Phone</th>
-                    <% if current_user.admin? %> 
+                    <% if current_user&.admin? %> 
                       <th>
                         <i class="ion ion-edit"></i>
                       </th>
@@ -170,7 +170,7 @@
                     <td><%= member.name %></td>
                     <td><%= member.email %></td>
                     <td><%= member.phone %></td>
-                    <% if current_user.admin? %>  
+                    <% if current_user&.admin? %>  
                       <td><%= link_to "", edit_member_path(member), { class: "ion ion-edit"} %></td>
                       <td>
                         <%= link_to member, members_path, method: :delete, data: { confirm: 'Are you sure?' } do %>
