@@ -1,2 +1,2 @@
 User.delete_all
-User.create([{ name: 'Zacharias', email: 'demo@demo.com', password: "change_me", remember_created_at: nil }])
+User.create([{ name: 'Admin User', email: 'admin@kisan.com', password: 'admin123', remember_created_at: nil }])
