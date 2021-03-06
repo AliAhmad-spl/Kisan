@@ -1,9 +1,9 @@
 class OrdersController < ApplicationController
-  before_action :set_order, only: [:show, :edit, :update, :destroy]
+  before_action :set_order, only: %i[show edit update destroy]
 
   def index
     @orders = Order.all
-    @members = Member.all
+    @members = User.all
     @items = Item.all
     @active = Order.active?
     @expired = Order.expired?
@@ -18,7 +18,7 @@ class OrdersController < ApplicationController
     @order = Order.find_by_id(params[:id])
     Order.renew(params[:id])
     redirect_to :root
-    flash[:notice] = "Renewed for 7 days from now. Enjoy!"
+    flash[:notice] = 'Renewed for 7 days from now. Enjoy!'
 
     begin
       OrderMailer.delay.renew_order(@order, @current_user).deliver
@@ -34,7 +34,7 @@ class OrdersController < ApplicationController
     @order = Order.find_by_id(params[:id])
     Order.disable(params[:id])
     redirect_to :root
-    flash[:notice] = "Item marked as returned. Thank you!"
+    flash[:notice] = 'Item marked as returned. Thank you!'
 
     begin
       OrderMailer.delay.return_order(@order, @current_user).deliver
@@ -44,7 +44,7 @@ class OrdersController < ApplicationController
 
   def new
     @order = Order.new
-    @member = Member.all
+    @member = User.all
   end
 
   def create
@@ -84,11 +84,12 @@ class OrdersController < ApplicationController
   end
 
   private
-    def set_order
-      @order = Order.find(params[:id])
-    end
 
-    def order_params
-      params.require(:order).permit(:quantity, :expire_at, :status, :item_id, :member_id)
-    end
+  def set_order
+    @order = Order.find(params[:id])
+  end
+
+  def order_params
+    params.require(:order).permit(:quantity, :expire_at, :status, :item_id, :member_id)
+  end
 end

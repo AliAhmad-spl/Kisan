@@ -65,12 +65,14 @@
           <span>Add Item</span>
         </a>
       </li>
-      <li>
-        <a href="<%= new_member_path %>">
-          <i class="fa fa-user-plus"></i>
-          <span>Add Member</span>
-        </a>
-      </li>
+      <% if current_user.admin? %>
+        <li>
+          <a href="<%= new_member_path %>">
+            <i class="fa fa-user-plus"></i>
+            <span>Add Member</span>
+          </a>
+        </li>
+      <% end %>
     </ul>
   </section>
   <!-- /.sidebar -->

@@ -1,19 +1,18 @@
 class MembersController < ApplicationController
-  before_action :set_member, only: [:show, :edit, :update, :destroy]
+  before_action :set_member, only: %i[show edit update destroy]
 
   def index
-    @members = Member.all
+    @members = User.all
   end
 
   def new
-    @member = Member.new
+    @member = User.new
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
-    @member = Member.new(member_params)
+    @member = User.new(member_params)
     if @member.save
       redirect_to :root, notice: 'Member was successfully created.'
     else
@@ -30,21 +29,17 @@ class MembersController < ApplicationController
   end
 
   def destroy
-    if @member.orders.where(status: true).count == 0
-      @member.destroy
-      redirect_to :root, notice: 'Member was successfully destroyed.'
-    else
-      flash[:alert] = 'Members with active orders can not be deleted. Mark his/hers open orders as returned and try again.'
-      redirect_to root_url
-    end
+    @member.destroy
+    redirect_to :root, notice: 'Member was successfully destroyed.'
   end
 
   private
-    def set_member
-      @member = Member.find(params[:id])
-    end
 
-    def member_params
-      params.require(:member).permit(:name, :email, :phone)
-    end
+  def set_member
+    @member = User.find(params[:id])
+  end
+
+  def member_params
+    params.require(:user).permit(:name, :email, :phone, :role, :password)
+  end
 end
