@@ -1,6 +1,7 @@
 class Order < ApplicationRecord
-  belongs_to :item
-  belongs_to :member
+  has_one :cart, dependent: :destroy
+  has_many :line_items, through: :cart
+  belongs_to :member, class_name: 'User', foreign_key: :member_id
 
   validates :quantity, presence: true
   validates :expire_at, presence: true
@@ -16,10 +17,10 @@ class Order < ApplicationRecord
   end
 
   def self.expired?
-    Order.where("expire_at < ?", Date.today).where(status: true)
+    Order.where('expire_at < ?', Date.today).where(status: true)
   end
 
-  def self.renew id
+  def self.renew(id)
     @order = Order.where(id: id)
     @order.update(expire_at: 7.days.from_now)
   end

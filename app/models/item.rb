@@ -1,7 +1,15 @@
 class Item < ApplicationRecord
-  has_many :orders
-  has_many :members, through: :orders
+  WHITELIST_PARAMS = %i[
+    name
+    category
+    quantity
+    price
+    description
+    remaining_quantity
+  ].freeze
+  has_many :line_items
+  # has_many :members, through: :orders
 
-  validates :name, presence: true
+  validates :name, :price, presence: true
   validates :category, presence: true
 end

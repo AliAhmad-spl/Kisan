@@ -1,5 +1,5 @@
 class ItemsController < ApplicationController
-  before_action :set_item, only: [:show, :edit, :update, :destroy]
+  before_action :set_item, only: %i[show edit update destroy available_quantity]
 
   def index
     @items = Item.all
@@ -9,8 +9,7 @@ class ItemsController < ApplicationController
     @item = Item.new
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     params[:item][:remaining_quantity] = params[:item][:quantity]
@@ -35,12 +34,22 @@ class ItemsController < ApplicationController
     redirect_to items_url, notice: 'Item was successfully destroyed.'
   end
 
+  def available_quantity
+    key = params['key'].to_i
+    if @item&.quantity.to_i >= key
+      render json: { "valid": true }
+    else
+      render json: { "valid": false, "quantity": @item.quantity }
+    end
+  end
+
   private
+
   def set_item
     @item = Item.find(params[:id])
   end
 
   def item_params
-    params.require(:item).permit(:name, :category, :quantity, :description, :remaining_quantity)
+    params.require(:item).permit(Item::WHITELIST_PARAMS)
   end
 end
