@@ -10,7 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170423144447) do
+ActiveRecord::Schema.define(version: 20210315165903) do
+
+  create_table "carts", force: :cascade do |t|
+    t.integer  "quantity",   default: 0
+    t.decimal  "subtotal"
+    t.decimal  "total"
+    t.decimal  "tax"
+    t.integer  "order_id"
+    t.integer  "user_id"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.index ["order_id"], name: "index_carts_on_order_id"
+    t.index ["user_id"], name: "index_carts_on_user_id"
+  end
 
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",   default: 0, null: false
@@ -32,9 +45,20 @@ ActiveRecord::Schema.define(version: 20170423144447) do
     t.string   "category"
     t.integer  "quantity"
     t.text     "description"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
     t.integer  "remaining_quantity"
+    t.integer  "price",              default: 0, null: false
+  end
+
+  create_table "line_items", force: :cascade do |t|
+    t.integer "quantity",  default: 0
+    t.integer "price",     default: 0
+    t.float   "sub_total", default: 0.0
+    t.integer "item_id"
+    t.integer "cart_id"
+    t.index ["cart_id"], name: "index_line_items_on_cart_id"
+    t.index ["item_id"], name: "index_line_items_on_item_id"
   end
 
   create_table "members", force: :cascade do |t|
@@ -71,6 +95,8 @@ ActiveRecord::Schema.define(version: 20170423144447) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
+    t.string   "phone"
+    t.integer  "role",                   default: 0
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
