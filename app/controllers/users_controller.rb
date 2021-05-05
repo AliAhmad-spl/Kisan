@@ -1,8 +1,14 @@
 class UsersController < ApplicationController
-  before_action :set_user
+  before_action :set_user, except: [:create, :new]
 
   def new
     @user = User.new
+  end
+
+  def create
+    @user = User.create(user_params)
+    @user.update(stripe_token: current_user.stripe_token, token_updated_at: current_user.token_updated_at) if current_user.stripe_token.present?
+    redirect_to :root
   end
 
   def edit
@@ -31,6 +37,6 @@ class UsersController < ApplicationController
     end
 
     def user_params
-      params.require(:user).permit(:name, :email, :password, :password_confirmation)
+      params.require(:user).permit(:name, :email, :company_name, :address, :phone, :password, :password_confirmation, :company_id)
     end
 end

@@ -2,7 +2,7 @@ class ItemsController < ApplicationController
   before_action :set_item, only: %i[show edit update destroy available_quantity]
 
   def index
-    @items = Item.all
+    @items = current_company.items
   end
 
   def new

@@ -1,5 +1,5 @@
 class CartsController < ApplicationController
-  before_action :set_reservation, only: %i[show edit update destroy]
+  before_action :set_reservation, only: %i[show edit update destroy remove clear]
 
   def create
     # params[:item][:remaining_quantity] = params[:item][:quantity]
@@ -13,6 +13,17 @@ class CartsController < ApplicationController
 
   def show
     @cart = current_cart
+  end
+
+  def clear
+    @reservation.line_items.destroy_all
+    redirect_to root_path
+  end
+
+  def remove
+    item = @reservation.line_items.find_by(id: params[:item_id])
+    item.destroy
+    redirect_to cart_path(id: @reservation.id)
   end
 
   def add_to_cart

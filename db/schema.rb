@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210315165903) do
+ActiveRecord::Schema.define(version: 20210505134544) do
 
   create_table "carts", force: :cascade do |t|
     t.integer  "quantity",   default: 0
@@ -23,6 +23,16 @@ ActiveRecord::Schema.define(version: 20210315165903) do
     t.datetime "updated_at",             null: false
     t.index ["order_id"], name: "index_carts_on_order_id"
     t.index ["user_id"], name: "index_carts_on_user_id"
+  end
+
+  create_table "companies", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "address"
+    t.string   "contact"
+    t.index ["user_id"], name: "index_companies_on_user_id"
   end
 
   create_table "delayed_jobs", force: :cascade do |t|
@@ -49,6 +59,7 @@ ActiveRecord::Schema.define(version: 20210315165903) do
     t.datetime "updated_at",                     null: false
     t.integer  "remaining_quantity"
     t.integer  "price",              default: 0, null: false
+    t.integer  "company_id"
   end
 
   create_table "line_items", force: :cascade do |t|
@@ -57,6 +68,7 @@ ActiveRecord::Schema.define(version: 20210315165903) do
     t.float   "sub_total", default: 0.0
     t.integer "item_id"
     t.integer "cart_id"
+    t.integer "order_id"
     t.index ["cart_id"], name: "index_line_items_on_cart_id"
     t.index ["item_id"], name: "index_line_items_on_item_id"
   end
@@ -77,6 +89,7 @@ ActiveRecord::Schema.define(version: 20210315165903) do
     t.integer  "member_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "company_id"
     t.index ["item_id"], name: "index_orders_on_item_id"
     t.index ["member_id"], name: "index_orders_on_member_id"
   end
@@ -97,6 +110,11 @@ ActiveRecord::Schema.define(version: 20210315165903) do
     t.string   "last_sign_in_ip"
     t.string   "phone"
     t.integer  "role",                   default: 0
+    t.string   "company_name"
+    t.string   "address"
+    t.string   "stripe_token"
+    t.string   "token_updated_at"
+    t.integer  "company_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

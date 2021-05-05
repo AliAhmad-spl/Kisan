@@ -1,0 +1,119 @@
+<style type="text/css">
+	.remove{
+		display: none;
+	}
+	p{
+		font-size: 20px;
+		color: black;
+	}
+</style>
+<p id="notice"><%= notice %></p>
+<%= link_to "Home", root_path, :class => 'navbar-link btn btn-danger btn-sm pull-right', id: "home", style:'color: white'  %> 
+<div class="hotel">
+<p>
+<b>
+  Name of customer
+</b></p>
+<p><b>
+#:<%= @order.id %>
+</b></p>
+<p><b>
+<%= @order.created_at.in_time_zone("Islamabad").strftime("%I:%M%p %d/%m/%Y") %>
+</b></p>
+<b style="float: right; color: black;">Sale Man: <%= @order.member&.name %></b>
+<table class="table table-bordered">
+	<tr>
+		<td>Name</td>
+		<td>Qty</td>
+		<td>Rate</td>
+		<td>Total</td>
+	</tr>
+	<% x = 1 %>
+	<% y = 1 %>
+	<%@order.line_items.order(:sub_total).reverse.each do |product|%>
+	<tr>
+		<td style="direction: rtl; font-size: 1em; font-family: 'Noto Naskh Arabic', serif; padding: 0px 50px 0px 0px; text-align: left;"><%= product.item.name %></td>
+		<td><%= product.quantity%></td>
+		<td><%= product.price %></td>
+		<td><%= product.sub_total %></td>
+	</tr>
+	<% x = x + 1 %>
+	<% y = y + 1 %>
+	<%end%>
+
+</table>
+<div id="last" style="display: none;" ><%= x-1 %></div>
+<div class="container">
+	<div class="row">
+		<div class="col-md-4">
+	<span style="font-size: 15px;" >Total amount:</span> <span id="grand_total" class="pull-right" style="font-size: 15px;"><%= @order.line_items.pluck(:sub_total).sum %> </span>
+
+</div>
+</div>
+</div>
+</div>
+<button onclick="removebtn()" id="print" class="btn btn-danger">Print recipte</button>
+<center><h4 style="font-style: oblique; font-size: 20px;">Thank you for visiting here</h4><p><b><%= current_user&.company&.contact%></b></b><p><b><%= current_user&.company&.address%></b></p></center>
+<script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous">
+ </script>
+
+ <script >
+ 	$('#print').click(function()
+ 	{
+ 		window.print();
+ 		location.reload();
+ 		document.getElementsById("1").setAttribute("class", "remove_button");
+ 		document.getElementsById("2").setAttribute("class", "remove_button");
+ 		// $("#home").prop("class", "remove"); 
+ 		document.getElementsById("print").setAttribute("class", "remove_button");  
+ 	});
+ </script>
+
+ <script>
+ 	$( document ).ready(function() {
+    	calculate();
+	});
+ 	// let plus = 0;
+    function calculate() {
+        var i = 1;
+
+        var plus = 0;
+
+        var last = parseInt(document.getElementById('last').innerText);
+
+		for (i = 1; i <= last; i++) {
+
+	        var myBox1 = document.getElementById('box1_'+i).value;
+
+	        var myBox2 = document.getElementById('box2_'+i).innerText;
+
+	        var myResult = myBox1 * myBox2;
+	        // console.log(myResult);
+
+			document.getElementById('result_'+ i).innerText = myResult;
+
+		  plus +=  parseInt(document.getElementById('result_'+i).innerText);
+
+        document.getElementById('grand_total').innerText = plus;
+		}
+
+    }
+    // document.getElementById('grand_total').innerText = plus;
+
+
+</script>
+<script type="text/javascript">
+	function removebtn(){
+	// document.getElementsByTagName("button")[0].setAttribute("class", "remove");
+	// document.getElementById("edit").setAttribute("class", "remove");
+	// document.getElementById("back").setAttribute("class", "remove");
+	$('#print').css('display', 'none');
+	$('#home').css('display', 'none');
+	$('#Edit').css('display', 'none');
+	
+  }
+
+</script>

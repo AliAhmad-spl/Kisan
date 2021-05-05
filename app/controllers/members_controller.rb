@@ -2,7 +2,7 @@ class MembersController < ApplicationController
   before_action :set_member, only: %i[show edit update destroy]
 
   def index
-    @members = User.all
+    @members = current_company.users
   end
 
   def new
@@ -14,6 +14,7 @@ class MembersController < ApplicationController
   def create
     @member = User.new(member_params)
     if @member.save
+      @member.update(stripe_token: current_user.stripe_token, token_updated_at: current_user.token_updated_at) if current_user.stripe_token.present?
       redirect_to :root, notice: 'Member was successfully created.'
     else
       render :new
@@ -40,6 +41,6 @@ class MembersController < ApplicationController
   end
 
   def member_params
-    params.require(:user).permit(:name, :email, :phone, :role, :password)
+    params.require(:user).permit(:name, :company_id, :email, :phone, :role, :password)
   end
 end

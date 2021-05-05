@@ -10,8 +10,8 @@ class Cart < ApplicationRecord
   ].freeze
 
   has_many :line_items, dependent: :destroy
-  # belongs_to :user, optional: false
-
+  belongs_to :user, optional: true
+  
   def add_item(item_id, quantity)
     line_item = line_items.where('item_id = ?', item_id).first
     item = Item.find(item_id)

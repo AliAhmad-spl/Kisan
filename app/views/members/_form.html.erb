@@ -28,6 +28,10 @@
       <%= f.text_field :phone, autocomplete: "off", placeholder: "Enter Phone Number", class: "form-control", required: true %>
     </div>
     <div class="form-group">
+      <%= f.hidden_field :company_id, autocomplete: "off", value: current_user.company.id, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
       <label>Member Role</label>
       <%= f.select :role, options_for_select(User.roles.map { |k, v| [k.to_s.titleize, v] }, f.object.role), { include_blank: true }, class: "form-control", required: true %>
     </div>

@@ -82,7 +82,7 @@
           <div class="col-md-6">
             <div class="box">
               <div class="box-header with-border">
-                <h3 class="box-title">Orders (<%= @active.count %>)</h3>
+                <h3 class="box-title">Orders (<%= @orders.count %>)</h3>
               </div>
               <!-- /.box-header -->
               <div class="box-body">
@@ -90,14 +90,11 @@
                   <thead>
                     <tr>
                       <th>Description</th>
-                      <th>Qty</th>
-                      <th>Return By</th>
-                      <th>Borrowed By</th>
+                      <th>Price</th>
+                      <th>Customer</th>
+                      <th>Created by</th>
                       <th>
                         <i class="ion ion-log-in"></i>
-                      </th>
-                      <th>
-                        <i class="ion ion-loop"></i>
                       </th>
                       <th>
                         <i class="ion ion-trash-b"></i>
@@ -105,29 +102,20 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <% @active.each do |order| %>
+                    <% @orders.reverse.each do |order| %>
                     <tr>
                       <td>
-                        <%= order.item.name %>
+                        <%= order.line_items&.first&.item&.name %>
                       </td>
-                      <td><%= order.quantity %></td>
-                      <% if order.expire_at.strftime("%y:%m:%d") >= Date.today.strftime("%y:%m:%d") %>
-                      <td>
-                        <%= order.expire_at %>
+                      <td><%= order.line_items.sum(:sub_total)%></td>
+                     <td>
+                       <p> customer names</p>
                       </td>
-                    <% else %>
-                      <td style="color:red;">
-                        <%= order.expire_at %>
-                      </td>
-                      <% end %>
                       <td>
                         <%= order.member.name %>
                       </td>
                       <td>
-                        <%= link_to "", { :controller => :orders, :action => :disable, :id => order.id }, { class: "ion ion-log-in"} %>
-                      </td>
-                      <td>
-                        <%= link_to "", { :controller => :orders, :action => :renew, :id => order.id }, { class: "ion ion-loop"} %>
+                        <%= link_to "", { :controller => :orders, :action => :show, :id => order.id }, { class: "ion ion-log-in"} %>
                       </td>
                       <td >
                         <%= link_to order, method: :delete, data: { confirm: 'Are you sure? If you are trying to return an item it is recommended to use the "return" button.' } do %>

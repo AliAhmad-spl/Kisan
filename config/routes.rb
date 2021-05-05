@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
-  devise_for :users
+  resources :charges
+  
+  resources :companies
+  devise_for :users,  controllers: {
+        sessions: 'users/sessions',
+        registrations: 'users/registrations'
+      }
   resources :orders
   resources :members
   resources :users
@@ -8,7 +14,12 @@ Rails.application.routes.draw do
       post :available_quantity
     end
   end
-  resources :carts
+  resources :carts do
+    member do
+      get :remove
+      get :clear 
+    end
+  end
 
   root 'orders#index'
   get 'renew/:id' => 'orders#renew'

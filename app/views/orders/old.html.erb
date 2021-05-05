@@ -30,24 +30,24 @@
                   <thead>
                     <tr>
                       <th>Order Id</th>
-                      <th>Category</th>
-                      <th>Item</th>
-                      <th>Quantity</th>
-                      <th>Borrowed at</th>
-                      <th>Returned at</th>
+                      <th>customer name</th>
+                      <th>Item count</th>
+                      <th>Total Quantity</th>
+                      <th>Placed at</th>
                       <th>Member</th>
+                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <% @inactive.each do |order| %>
+                    <% @orders.each do |order| %>
                     <tr>
                       <td><%= order.id %></td>
-                      <td><%= order.item.category %></td>
-                      <td><%= order.item.name %></td>
-                      <td><%= order.quantity %></td>
+                      <td>customer name</td>
+                      <td><%= order.line_items.count %></td>
+                      <td><%= order.line_items.sum(:quantity) %></td>
                       <td><%= order.created_at.strftime("%d/%m/%Y, %H:%M") %></td>
-                      <td><%= order.updated_at.strftime("%d/%m/%Y, %H:%M") %></td>
                       <td><%= order.member.name %></td>
+                      <td><%= link_to 'view', order_path(id: order.id) %></td>
                     </tr>
                     <% end %>
                   </tbody>

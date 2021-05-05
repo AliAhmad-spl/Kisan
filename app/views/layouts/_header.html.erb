@@ -3,10 +3,10 @@
   <a href="<%= root_url %>" class="logo">
     <!-- mini logo for sidebar mini 50x50 pixels -->
     <span class="logo-mini">
-      <b>Easy</b>Kisan</span>
+      <%= current_user&.company&.name%></span>
     <!-- logo for regular state and mobile devices -->
     <span class="logo-lg">
-      <b>EasyKisan</b>
+      <b><%= current_user&.company&.name&.truncate(16)%></b>
     </span>
   </a>
   <!-- Header Navbar: style can be found in header.less -->
@@ -27,7 +27,7 @@
         <%= image_tag("user2-160x160.jpg", class: "img-circle") %>
       </div>
       <div class="pull-left info">
-        <p><%= current_user.name %></p>
+        <p><%= current_user&.name %></p>
         <a href="<%= edit_user_path(current_user.id) %>">
           <i class="fa fa-edit"></i>
           Edit Profile</a>
@@ -54,18 +54,36 @@
         </a>
       </li>
       <li>
-        <a href="<%= past_orders_path %>">
-          <i class="fa fa-history"></i>
-          <span>Past Orders</span>
-        </a>
-      </li>
-      <li>
         <a href=" <%= new_item_path %>">
           <i class="fa fa-plus"></i>
           <span>Add Item</span>
         </a>
       </li>
       <% if current_user.admin? %>
+      <li>
+        <a href="<%= past_orders_path %>">
+          <i class="fa fa-history"></i>
+          <span>Orders</span>
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <i class="fa fa-history"></i>
+          <span>All accounts</span>
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <i class="fa fa-desktop"></i>
+          <span>Manage Inventory</span>
+        </a>
+      </li>
+      <li>
+        <a href=" <%= edit_company_path(id: current_user&.company&.id || current_user.id) %>">
+          <i class="fa fa-plus"></i>
+          <span>Update company</span>
+        </a>
+      </li>
         <li>
           <a href="<%= new_member_path %>">
             <i class="fa fa-user-plus"></i>

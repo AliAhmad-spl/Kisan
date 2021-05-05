@@ -39,6 +39,7 @@
                       <th>Price</th>
                       <th>Quantity</th>
                       <th>SubTotal</th>
+                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -48,10 +49,11 @@
                       <td><%= item.price %></td>
                       <td><%= item.quantity %></td>
                       <td><%= item.sub_total.to_i %></td>
+                      <td><%= link_to 'Remove', remove_cart_path(id: @cart.id, item_id: item.id) %></td>
                     </tr>
                     <% end %>
                     <tr>
-                      <td colspan="2">&nbsp;</td>
+                      <td colspan="3">&nbsp;</td>
                       <td><strong>Total</strong></td>
                       <td><%= @cart.total_price %></td>
                     </tr>
@@ -63,6 +65,8 @@
           </div>
         </div>
       </section>
+      <%= link_to 'clear receipt', clear_cart_path(id: @cart.id), class:"btn btn-primary"%>
+      <%= link_to 'Proceed Order', orders_path(id: @cart.id), method: :post, class:"btn btn-warning"%>
     </div>
     <%= render 'layouts/footer' %>
   </div>
