@@ -7,7 +7,8 @@ class ApplicationController < ActionController::Base
       return true 
     else
       if current_user.present?
-        redirect_to new_charge_path
+        flash[:error] = "Please check your access rights or credentials"
+        redirect_to main_app.new_charge_path
       end
     end
   end
