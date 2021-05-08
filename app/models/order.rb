@@ -1,6 +1,6 @@
 class Order < ApplicationRecord
-  has_one :cart, dependent: :destroy
-  has_many :line_items
+  has_one :cart
+  has_many :line_items, dependent: :delete_all
   belongs_to :member, class_name: 'User', foreign_key: :member_id
   belongs_to :company
   # validates :quantity, presence: true
