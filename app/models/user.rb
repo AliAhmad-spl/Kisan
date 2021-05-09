@@ -6,7 +6,7 @@ class User < ApplicationRecord
   enum roles: { admin: 0, salesman: 1, manager: 2 }
 
   has_many :orders
-  has_many :items, through: :orders
+  has_many :categories
   belongs_to :company, optional: true
   #validates :name, presence: true
   validates :email, presence: true
