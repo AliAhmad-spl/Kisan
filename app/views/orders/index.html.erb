@@ -96,9 +96,11 @@
                       <th>
                         <i class="ion ion-log-in"></i>
                       </th>
+                      <% if current_user.role == 0 %>
                       <th>
                         <i class="ion ion-trash-b"></i>
                       </th>
+                      <%end%>
                     </tr>
                   </thead>
                   <tbody>
@@ -118,8 +120,10 @@
                         <%= link_to "", { :controller => :orders, :action => :show, :id => order.id }, { class: "ion ion-log-in"} %>
                       </td>
                       <td >
+                        <% if current_user.role == 0 %>
                         <%= link_to order, method: :delete, data: { confirm: 'Are you sure? If you are trying to return an item it is recommended to use the "return" button.' } do %>
                         <i class="ion ion-trash-b"></i>
+                        <%end%>
                         <% end %>
                       </td>
                     </tr>
