@@ -53,7 +53,7 @@ class OrdersController < ApplicationController
 
   def create  
     @cart = Cart.find_by(id: params[:id])
-    @order = Order.create(member_id: current_user.id, company_id: current_user.company.id)
+    @order = Order.create(name: params[:name], user_id: current_user.id, company_id: current_user.company.id)
     if @cart.line_items.update_all(order_id: @order.id)
       @cart.line_items.each do |e|
         e.item.update(quantity: e.item.quantity - e.quantity)

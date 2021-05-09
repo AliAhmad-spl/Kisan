@@ -32,6 +32,10 @@
               <%#= link_to 'Cart', cart_path(current_cart), class: "btn btn-primary pull-right" %>
               <!-- /.box-header -->
               <div class="box-body">
+                <%= form_tag orders_path, method: :post do %>
+                <%= text_field_tag :name, nil, placeholder:"Enter customer name", value: "No Name", required: true%>
+                <%= hidden_field_tag :id, nil, value: @cart.id %>
+                
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                     <tr>
@@ -66,7 +70,8 @@
         </div>
       </section>
       <%= link_to 'clear receipt', clear_cart_path(id: @cart.id), class:"btn btn-primary"%>
-      <%= link_to 'Proceed Order', orders_path(id: @cart.id), method: :post, class:"btn btn-warning"%>
+      <%= submit_tag("Proceed Order", class:"btn btn-warning")%>
+      <%end%>
     </div>
     <%= render 'layouts/footer' %>
   </div>

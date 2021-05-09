@@ -42,11 +42,11 @@
                     <% @orders.each do |order| %>
                     <tr>
                       <td><%= order.id %></td>
-                      <td>customer name</td>
+                      <td><%= order&.name%></td>
                       <td><%= order.line_items.count %></td>
                       <td><%= order.line_items.sum(:quantity) %></td>
                       <td><%= order.created_at.strftime("%d/%m/%Y, %H:%M") %></td>
-                      <td><%= order.member.name %></td>
+                      <td><%= order&.user&.name %></td>
                       <td><%= link_to 'view', order_path(id: order.id) %></td>
                     </tr>
                     <% end %>

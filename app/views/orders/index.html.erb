@@ -109,10 +109,10 @@
                       </td>
                       <td><%= order.line_items.sum(:sub_total)%></td>
                      <td>
-                       <p> customer names</p>
+                       <p> <%= order&.name %></p>
                       </td>
                       <td>
-                        <%= order.member.name %>
+                        <%= order&.user&.name %>
                       </td>
                       <td>
                         <%= link_to "", { :controller => :orders, :action => :show, :id => order.id }, { class: "ion ion-log-in"} %>

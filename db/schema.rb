@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210506111937) do
+ActiveRecord::Schema.define(version: 20210509054142) do
 
   create_table "carts", force: :cascade do |t|
     t.integer  "quantity",   default: 0
@@ -23,6 +23,14 @@ ActiveRecord::Schema.define(version: 20210506111937) do
     t.datetime "updated_at",             null: false
     t.index ["order_id"], name: "index_carts_on_order_id"
     t.index ["user_id"], name: "index_carts_on_user_id"
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_categories_on_user_id"
   end
 
   create_table "companies", force: :cascade do |t|
@@ -86,12 +94,12 @@ ActiveRecord::Schema.define(version: 20210506111937) do
     t.boolean  "status"
     t.date     "expire_at"
     t.integer  "item_id"
-    t.integer  "member_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "company_id"
+    t.integer  "user_id"
+    t.string   "name"
     t.index ["item_id"], name: "index_orders_on_item_id"
-    t.index ["member_id"], name: "index_orders_on_member_id"
   end
 
   create_table "users", force: :cascade do |t|

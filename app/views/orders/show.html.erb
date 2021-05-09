@@ -7,12 +7,13 @@
 		color: black;
 	}
 </style>
+<center><h3> <%= current_user.company.name %></h3></center>
 <p id="notice"><%= notice %></p>
 <%= link_to "Home", root_path, :class => 'navbar-link btn btn-danger btn-sm pull-right', id: "home", style:'color: white'  %> 
 <div class="hotel">
 <p>
 <b>
-  Name of customer
+  <%= @order&.name%>
 </b></p>
 <p><b>
 #:<%= @order.id %>
@@ -20,7 +21,7 @@
 <p><b>
 <%= @order.created_at.in_time_zone("Islamabad").strftime("%I:%M%p %d/%m/%Y") %>
 </b></p>
-<b style="float: right; color: black;">Sale Man: <%= @order.member&.name %></b>
+<b style="float: right; color: black;">Sale Man: <%= @order&.user&.name %></b>
 <table class="table table-bordered">
 	<tr>
 		<td>Name</td>
