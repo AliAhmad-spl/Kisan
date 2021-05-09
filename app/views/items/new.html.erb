@@ -52,8 +52,16 @@
                   <%= f.text_area :description, class: "form-control", rows: "3", laceholder: "Enter Description"%>
                 </div>
                 <div class="form-group">
-                  <label>Price</label>
+                  <label>Sale Price</label>
                   <%= f.number_field :price, class: "form-control", placeholder: "Enter Price", required: true  %>
+                </div>
+                <div class="form-group">
+                  <label>Buy Price</label>
+                  <%= f.number_field :buying_price, class: "form-control", placeholder: "Enter Price", required: true  %>
+                </div>
+                <div class="form-group">
+                  <label>Buy Price</label>
+                  <%= f.date_field :expiry_date, class: "form-control", placeholder: "Enter Price", required: true  %>
                 </div>
                 <div class="form-group">
                   <label>Quantity</label>
