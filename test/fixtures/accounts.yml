@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  party_name: MyString
+  customer_name: MyString
+
+two:
+  party_name: MyString
+  customer_name: MyString

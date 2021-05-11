@@ -1,0 +1,74 @@
+<body class="hold-transition skin-blue sidebar-mini">
+  <div class="wrapper">
+    <%= render 'layouts/header' %>
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <h1>
+          Accounts
+          <small>Details</small>
+        </h1>
+        <ol class="breadcrumb">
+          <li>
+            <a href="#">
+              <i class="fa fa-home"></i>
+              Home Page</a>
+          </li>
+          <li class="active">Check Inventory</li>
+        </ol>
+      </section>
+
+      <section class="content">
+        <div class="row">
+          <div class="col-xs-12">
+          <div class="box">
+            <div class="box-body">
+            <table id="example1" class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th>Party name</th>
+                <th>company name</th>
+                <th>View</th>
+                <th>Edit</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <% @accounts.each do |account| %>
+                <tr>
+                  <td><%= account.party_name %></td>
+                  <td><%= account.company.name %></td>
+                  <td><%= link_to 'Show', account %></td>
+                  <td><%= link_to 'Edit', edit_account_path(account) %></td>
+                  <td><%= link_to 'Destroy', account, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+          </div>
+        </div>
+                  </div>
+        </div>
+      </section>
+    </div>
+    <%= render 'layouts/footer' %>
+  </div>
+  <script>
+    $(function () {
+      $("#example1").DataTable();
+      $('#example2').DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "searching": false,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false
+      });
+    });
+    function show_item_modal(item_id) {
+      $('#line_item_item_id').val(item_id);
+      $('#item_reservations_modal').modal('show');
+    }
+  </script>
+</body>

@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :payments
+  resources :accounts
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   resources :charges
   
