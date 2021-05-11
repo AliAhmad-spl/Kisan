@@ -9,6 +9,5 @@ class CreatePayments < ActiveRecord::Migration[5.0]
 
       t.timestamps
     end
-    change_column :orders, :status, :integer, default: 0
   end
 end
