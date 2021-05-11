@@ -69,7 +69,13 @@
                 </div>
                 <div class="form-group">
                   <label>Category</label>
-                  <%= f.select(:category, [["Books","Books"], ["Magazines","Magazines"], ["Electronics","Electronics"], ["Hardware","Hardware"], ["Tools","Tools"]], {}, { :class => 'form-control' })%>
+                  <%= f.select(:category, [["Fertilizer","Fertilizer"], ["Seed","Seed"], ["Pesticide","Pesticide"], ["Wheat","Wheat"], ["Rice","Rice"]], {}, { :class => 'form-control' })%>
+                </div>
+                <div class="form-group">
+                  <%= f.file_field :avatars, multiple: true %>
+                </div>
+                <div class="form-group">
+                  <%= f.file_field :avatars, multiple: true %>
                 </div>
               </div>
               <!-- /.box-body -->

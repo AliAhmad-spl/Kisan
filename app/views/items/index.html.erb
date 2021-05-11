@@ -39,6 +39,8 @@
                       <th>Description</th>
                       <th>Price</th>
                       <th>Available Qty</th>
+                      <th>Expiry date</th>
+                      <th>View</th>>
                       <th>Edit</th>
                       <th>Delete</th>
                       <th>Add</th>
@@ -53,6 +55,8 @@
                       <td><%= item.description %></td>
                       <td><%= item.price %></td>
                       <td><%= item.quantity %></td>
+                      <td><%= item.expiry_date %></td>
+                      <td><%= link_to 'View', item_path(item) %></td>
                       <td><%= link_to 'Edit', edit_item_path(item) %></td>
                       <td><%= link_to 'Delete', item, method: :delete, data: { confirm: 'Are you sure you want to delete this item?' } %></td>
                       <td><%#= link_to 'Borrow', new_order_path(item: item.id) %>

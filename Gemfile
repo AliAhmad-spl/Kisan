@@ -20,6 +20,7 @@ gem 'jquery-rails'
 gem 'jbuilder', '~> 2.5'
 gem 'stripe'
 gem 'dotenv-rails', :groups => [:development, :test]
+gem "fog-aws"
 
 group :development, :test do
   gem 'byebug', platform: :mri

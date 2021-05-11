@@ -28,7 +28,7 @@
             <div class="small-box bg-aqua">
               <div class="inner">
                 <h3><%=@items.sum(:quantity)%></h3>
-                <p>Items Tracked</p>
+                <h4>Daily Book</h4>
               </div>
               <div class="icon">
                 <i class="ion ion-search"></i>
@@ -41,7 +41,7 @@
             <div class="small-box bg-green">
               <div class="inner">
                 <h3><%=@items.sum(:remaining_quantity)%></h3>
-                <p>Items Available</p>
+                <h4>Accounts</h4>
               </div>
               <div class="icon">
                 <i class="ion ion-checkmark"></i>
@@ -49,133 +49,32 @@
             </div>
           </div>
           <!-- ./col -->
+          <a href="/items">
           <div class="col-lg-3 col-xs-6">
             <!-- small box -->
             <div class="small-box bg-red">
               <div class="inner">
                 <h3><%= (@items.sum(:quantity) - @items.sum(:remaining_quantity)) %></h3>
-                <p>Items Unavailable</p>
+                <h4>Stock Register</h4>
               </div>
               <div class="icon">
                 <i class="ion ion-alert"></i>
               </div>
             </div>
           </div>
+        </a>
           <!-- ./col -->
           <div class="col-lg-3 col-xs-6">
             <!-- small box -->
             <div class="small-box bg-yellow">
               <div class="inner">
                 <h3><%= @expired.count %></h3>
-                <p>Expired Orders</p>
+                <h4>Customers</p>
               </div>
               <div class="icon">
                 <i class="ion ion-android-time"></i>
               </div>
             </div>
-          </div>
-          <!-- ./col -->
-        </div>
-        <!-- /.row -->
-
-        <div class="row">
-          <div class="col-md-6">
-            <div class="box">
-              <div class="box-header with-border">
-                <h3 class="box-title">Orders (<%= @orders.count %>)</h3>
-              </div>
-              <!-- /.box-header -->
-              <div class="box-body">
-                <table class="table table-bordered table-hover">
-                  <thead>
-                    <tr>
-                      <th>Description</th>
-                      <th>Price</th>
-                      <th>Customer</th>
-                      <th>Created by</th>
-                      <th>
-                        <i class="ion ion-log-in"></i>
-                      </th>
-                      <% if current_user.role == 0 %>
-                      <th>
-                        <i class="ion ion-trash-b"></i>
-                      </th>
-                      <%end%>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <% @orders.reverse.each do |order| %>
-                    <tr>
-                      <td>
-                        <%= order.line_items&.first&.item&.name %>
-                      </td>
-                      <td><%= order.line_items.sum(:sub_total)%></td>
-                     <td>
-                       <p> <%= order&.name %></p>
-                      </td>
-                      <td>
-                        <%= order&.user&.name %>
-                      </td>
-                      <td>
-                        <%= link_to "", { :controller => :orders, :action => :show, :id => order.id }, { class: "ion ion-log-in"} %>
-                      </td>
-                      <td >
-                        <% if current_user.role == 0 %>
-                        <%= link_to order, method: :delete, data: { confirm: 'Are you sure? If you are trying to return an item it is recommended to use the "return" button.' } do %>
-                        <i class="ion ion-trash-b"></i>
-                        <%end%>
-                        <% end %>
-                      </td>
-                    </tr>
-                    <% end %>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            <!-- /.box -->
-          </div>
-          <!-- ./col -->
-
-          <div class="col-md-6">
-            <div class="box">
-              <div class="box-header with-border">
-                <h3 class="box-title">Members (<%= @members.count %>)</h3>
-              </div>
-              <!-- /.box-header -->
-              <div class="box-body">
-                <table class="table table-bordered table-hover">
-                  <tr>
-                    <th>Name</th>
-                    <th>E-mail</th>
-                    <th>Phone</th>
-                    <% if current_user&.admin? %> 
-                      <th>
-                        <i class="ion ion-edit"></i>
-                      </th>
-                      <th>
-                        <i class="ion ion-trash-b"></i>
-                      </th>
-                    <% end %>
-                  </tr>
-                  <% @members.each do |member| %>
-                  <tr>
-                    <td><%= member.name %></td>
-                    <td><%= member.email %></td>
-                    <td><%= member.phone %></td>
-                    <% if current_user&.admin? %>  
-                      <td><%= link_to "", edit_member_path(member), { class: "ion ion-edit"} %></td>
-                      <td>
-                        <%= link_to destroy_member_path(id: member.id), method: :delete, data: { confirm: 'Are you sure?' } do %>
-                        <i class="ion ion-trash-b"></i>
-                        <% end %>
-                      </td>
-                    <% end %>
-                  </tr>
-                  <% end %>
-                </table>
-              </div>
-            </div>
-            <!-- /.box -->
           </div>
           <!-- ./col -->
         </div>

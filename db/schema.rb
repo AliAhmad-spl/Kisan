@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210509091836) do
+ActiveRecord::Schema.define(version: 20210511053805) do
 
   create_table "carts", force: :cascade do |t|
     t.integer  "quantity",   default: 0
@@ -70,6 +70,7 @@ ActiveRecord::Schema.define(version: 20210509091836) do
     t.integer  "company_id"
     t.integer  "buying_price"
     t.date     "expiry_date"
+    t.string   "avatars"
   end
 
   create_table "line_items", force: :cascade do |t|

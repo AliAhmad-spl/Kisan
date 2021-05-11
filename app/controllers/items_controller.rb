@@ -9,6 +9,10 @@ class ItemsController < ApplicationController
     @item = Item.new
   end
 
+  def show
+    
+  end
+
   def edit; end
 
   def create
@@ -50,6 +54,6 @@ class ItemsController < ApplicationController
   end
 
   def item_params
-    params.require(:item).permit(Item::WHITELIST_PARAMS)
+    params.require(:item).permit(:name, :category, :quantity, :price, :description, :buying_price, :company_id, :expiry_date, :company_id, {avatars: []})
   end
 end

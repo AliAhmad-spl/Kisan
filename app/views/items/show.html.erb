@@ -1,0 +1,86 @@
+<body class="hold-transition skin-blue sidebar-mini">
+  <div class="wrapper">
+    <%= render 'layouts/header' %>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <h1>
+          Add Item
+        </h1>
+        <ol class="breadcrumb">
+          <li>
+            <a href="#">
+              <i class="fa fa-home"></i>
+              Home Page</a>
+          </li>
+          <li class="active">View Item</li>
+        </ol>
+      </section>
+
+      <!-- Main content -->
+      <section class="content">
+        <div class="row">
+          <!-- left column -->
+          <div class="col-md-6">
+            <!-- general form elements -->
+            <div class="box box-header">
+              <div class="box-header with-border">
+                <h3 class="box-title">Basic Information</h3>
+              </div>
+                <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Category</th>
+                      <th>Name</th>
+                      <th>Price</th>
+                      <th>Available Qty</th>
+                      <th>Expiry date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><%= @item.id %></td>
+                      <td><%= @item.category %></td>
+                      <td><%= @item.name %></td>
+                      <td><%= @item.price %></td>
+                      <td><%= @item.quantity %></td>
+                      <td><%= @item.expiry_date %></td>
+                    </tr>
+                  </tbody>
+                </table>
+          </div>
+          <div class="box box-header">
+              <div class="box-header with-border">
+                <h3 class="box-title">Description</h3>
+              </div>
+              <th>Description</th>
+              <td><%= @item.description %></td>
+          </div>
+          <!--/.col (right) -->
+        </div>
+        <% if @item.avatars.present? %>
+            <div class="col-md-6">  
+              <%= image_tag @item.avatars.first.url, height: 500, width: 500, style:"margin: 30px;" %>
+              <%= image_tag @item.avatars.last.url, height: 500, width: 500, style:"margin: 30px;" %>
+            </div>
+            <% end %>
+        <!-- /.row -->
+      </section>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <footer class="main-footer">
+      <div class="pull-right hidden-xs">
+        <b>Version</b>
+        0.1
+      </div>
+      Content available under
+    </footer>
+    <!-- ./wrapper -->
+    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+    <script>
+      $.widget.bridge('uibutton', $.ui.button);
+    </script>
+  </body>
