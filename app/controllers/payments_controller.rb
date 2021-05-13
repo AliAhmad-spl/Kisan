@@ -15,6 +15,7 @@ class PaymentsController < ApplicationController
   # GET /payments/new
   def new
     @payment = Payment.new
+    @account_id = params[:account_id]
   end
 
   # GET /payments/1/edit
@@ -25,10 +26,13 @@ class PaymentsController < ApplicationController
   # POST /payments.json
   def create
     @payment = Payment.new(payment_params)
-
     respond_to do |format|
       if @payment.save
-        format.html { redirect_to @payment, notice: 'Payment was successfully created.' }
+        @account = Account.find_by(id: params[:payment][:account_id]) if params[:payment][:account_id].present?
+        @payment.update(current_balance: @account.remaining_balance - @payment.amount)
+
+        @account.update(total_credit: @account.total_credit + @payment.amount, remaining_balance: @account.remaining_balance - @payment.amount) if params[:payment][:account_id].present?
+        format.html { redirect_to account_path(id: @account.id), notice: 'Payment was successfully created.' }
         format.json { render :show, status: :created, location: @payment }
       else
         format.html { render :new }
@@ -56,7 +60,7 @@ class PaymentsController < ApplicationController
   def destroy
     @payment.destroy
     respond_to do |format|
-      format.html { redirect_to payments_url, notice: 'Payment was successfully destroyed.' }
+      format.html { redirect_to account_path(id: params[:account_id]), notice: 'Payment was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

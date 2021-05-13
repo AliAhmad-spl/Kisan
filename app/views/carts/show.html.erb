@@ -33,6 +33,8 @@
               <!-- /.box-header -->
               <div class="box-body">
                 <%= form_tag orders_path, method: :post do %>
+                 <%= select_tag "account_id", options_from_collection_for_select(current_user.company.accounts, "id", "party_name"), include_blank: true %>
+                 <%= select_tag :status, options_for_select(Payment.statuses.first(2).map {|k, v| [k.humanize.capitalize, k]}) %>
                 <%= text_field_tag :name, nil, placeholder:"Enter customer name", value: "No Name", required: true%>
                 <%= hidden_field_tag :id, nil, value: @cart.id %>
                 

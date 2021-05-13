@@ -38,6 +38,7 @@
                       <th>Name</th>
                       <th>Description</th>
                       <th>Price</th>
+                      <th>Buy price</th>
                       <th>Available Qty</th>
                       <th>Expiry date</th>
                       <th>View</th>>
@@ -54,6 +55,7 @@
                       <td><%= item.name %></td>
                       <td><%= item.description %></td>
                       <td><%= item.price %></td>
+                       <td><%= item.buying_price %></td>
                       <td><%= item.quantity %></td>
                       <td><%= item.expiry_date %></td>
                       <td><%= link_to 'View', item_path(item) %></td>

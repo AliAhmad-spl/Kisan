@@ -45,6 +45,10 @@
     <%= f.label :party_name %>
     <%= f.text_field :party_name, class:"form-control", placeholder:"Enter party name" %>
   </div>
+  <div class="field">
+    <%= f.label :Opening_balance %>
+    <%= f.text_field :remaining_balance, class:"form-control", placeholder:"Opening balance" %>
+  </div>
 
   <div class="field">
     <%= f.hidden_field :company_id, value: current_user.company.id %>

@@ -10,6 +10,7 @@ class AccountsController < ApplicationController
   # GET /accounts/1
   # GET /accounts/1.json
   def show
+    @payments = @account.payments
   end
 
   # GET /accounts/new
@@ -69,6 +70,6 @@ class AccountsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def account_params
-      params.require(:account).permit(:party_name, :company_id)
+      params.require(:account).permit(:party_name, :company_id, :total_credit, :total_debit, :remaining_balance)
     end
 end

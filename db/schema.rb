@@ -10,13 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210511164701) do
+ActiveRecord::Schema.define(version: 20210513140009) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "party_name"
     t.integer  "company_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.integer  "total_credit",      default: 0
+    t.integer  "total_debit",       default: 0
+    t.integer  "remaining_balance", default: 0
   end
 
   create_table "carts", force: :cascade do |t|
@@ -120,6 +123,7 @@ ActiveRecord::Schema.define(version: 20210511164701) do
     t.integer  "current_balance", default: 0
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
+    t.integer  "order_id"
     t.index ["account_id"], name: "index_payments_on_account_id"
   end
 

@@ -27,7 +27,9 @@
             <thead>
               <tr>
                 <th>Party name</th>
-                <th>company name</th>
+                <th>Total credit</th>
+                <th>Total debit</th>
+                <th>Remaining Amount</th>
                 <th>View</th>
                 <th>Edit</th>
                 <th>Action</th>
@@ -38,8 +40,14 @@
               <% @accounts.each do |account| %>
                 <tr>
                   <td><%= account.party_name %></td>
-                  <td><%= account.company.name %></td>
-                  <td><%= link_to 'Show', account %></td>
+                  <td><%= account.total_credit %></td>
+                  <td><%= account.total_debit %></td>
+                  <% if account.remaining_balance < 0%>
+                    <td style="color: red;"><%= account.remaining_balance %></td>
+                  <%else%>
+                    <td><%= account.remaining_balance %></td>
+                  <%end%>
+                  <td><%= link_to 'payments', account %></td>
                   <td><%= link_to 'Edit', edit_account_path(account) %></td>
                   <td><%= link_to 'Destroy', account, method: :delete, data: { confirm: 'Are you sure?' } %></td>
                 </tr>

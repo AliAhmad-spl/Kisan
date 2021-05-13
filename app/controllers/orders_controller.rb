@@ -5,8 +5,6 @@ class OrdersController < ApplicationController
     @orders = current_company.orders.last(8)
     @members = current_company.users
     @items = current_company.items
-    @active = Order.active?
-    @expired = Order.expired?
   end
 
   def old
@@ -53,13 +51,16 @@ class OrdersController < ApplicationController
 
   def create  
     @cart = Cart.find_by(id: params[:id])
-    @order = Order.create(name: params[:name], user_id: current_user.id, company_id: current_user.company.id)
+    @order = Order.create(name: params[:name], user_id: current_user.id, company_id: current_user.company.id, status: params[:status])
     if @cart.line_items.update_all(order_id: @order.id)
       @cart.line_items.each do |e|
         e.item.update(quantity: e.item.quantity - e.quantity)
       end
       @cart.line_items.update_all(cart_id: nil)
     end
+    @account = Account.find_by(id: params[:account_id]) if params[:account_id].present?
+    @payment = Payment.create(account_id: params[:account_id], order_id: @order.id, customer_name: params[:name], amount: @order.line_items.sum(:price), status: params[:status], current_balance: @account.remaining_balance + @order.line_items.sum(:price)) if params[:account_id].present?
+    @account.update(total_debit: @account.total_debit + @payment.amount, remaining_balance: @account.remaining_balance + @payment.amount) if params[:account_id].present?
 
     redirect_to order_path(id: @order.id)
     # if Item.find_by_id(params[:order][:item_id]).remaining_quantity >= params[:order][:quantity].to_i
