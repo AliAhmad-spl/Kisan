@@ -28,7 +28,7 @@
             <!-- small box -->
             <div class="small-box bg-aqua">
               <div class="inner">
-                <h3><%=@items.sum(:quantity)%></h3>
+                <h3><%=@orders.count%></h3>
                 <h4>Daily Book</h4>
               </div>
               <div class="icon">
@@ -43,7 +43,7 @@
             <!-- small box -->
             <div class="small-box bg-green">
               <div class="inner">
-                <h3><%=@items.sum(:remaining_quantity)%></h3>
+                <h3><%= current_user.company.accounts.count%></h3>
                 <h4>Accounts</h4>
               </div>
               <div class="icon">
@@ -72,7 +72,7 @@
             <!-- small box -->
             <div class="small-box bg-yellow">
               <div class="inner">
-                <h3>45</h3>
+                <h3><%= current_user.company.accounts.count %></h3>
                 <h4>Customers</p>
               </div>
               <div class="icon">

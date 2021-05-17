@@ -48,7 +48,7 @@
 
   <div class="field">
     <%= f.label :customer_name %>
-    <%= f.text_field :customer_name, class:"form-control" %>
+    <%= f.text_field :customer_name, class:"form-control", value: @account.party_name %>
   </div>
 
   <div class="field">
@@ -56,9 +56,9 @@
     <%= f.number_field :amount,class:"form-control" %>
   </div>
 
-  <div class="field">
-    <%= f.label :status %>
-    <%= f.text_field :status, value:"credit", class:"form-control" %>
+  <div class="form-group">
+    <label>Category</label>
+    <%= f.select(:status, [["Cash","cash"], ["Cheque","cheque"]], {}, { :class => 'form-control' })%>
   </div>
 
   <div class="actions">

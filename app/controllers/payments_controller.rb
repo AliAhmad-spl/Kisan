@@ -16,6 +16,7 @@ class PaymentsController < ApplicationController
   def new
     @payment = Payment.new
     @account_id = params[:account_id]
+    @account = Account.find_by(id: params[:account_id])
   end
 
   # GET /payments/1/edit
@@ -30,7 +31,7 @@ class PaymentsController < ApplicationController
       if @payment.save
         @account = Account.find_by(id: params[:payment][:account_id]) if params[:payment][:account_id].present?
         @payment.update(current_balance: @account.remaining_balance - @payment.amount)
-
+        Order.create(user_id: current_user.id, company_id: current_user.company.id, name: @payment.account.party_name, status: params[:payment][:status], total_amount: @payment.amount)
         @account.update(total_credit: @account.total_credit + @payment.amount, remaining_balance: @account.remaining_balance - @payment.amount) if params[:payment][:account_id].present?
         format.html { redirect_to account_path(id: @account.id), notice: 'Payment was successfully created.' }
         format.json { render :show, status: :created, location: @payment }

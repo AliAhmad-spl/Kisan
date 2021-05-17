@@ -6,7 +6,7 @@
       <!-- Content Header (Page header) -->
       <section class="content-header">
         <h1>
-          Past Orders
+          Cash: <%= @cash_today %>
         </h1>
         <ol class="breadcrumb">
           <li>
@@ -32,10 +32,10 @@
                       <th>Order Id</th>
                       <th>customer name</th>
                       <th>Item count</th>
-                      <th>Total Quantity</th>
-                      <th>Placed at</th>
+                      <th>Date Time</th>
                       <th>Status</th>
                       <th>Member</th>
+                      <th>Total amount</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -45,10 +45,10 @@
                       <td><%= order.id %></td>
                       <td><%= order&.name%></td>
                       <td><%= order.line_items.count %></td>
-                      <td><%= order.line_items.sum(:quantity) %></td>
                       <td><%= order.created_at.strftime("%d/%m/%Y, %H:%M") %></td>
                       <td><%= order&.status %></td>
                       <td><%= order&.user&.name %></td>
+                      <td><%= order.total_amount %></td>
                       <td><%= link_to 'view', order_path(id: order.id) %></td>
                     </tr>
                     <% end %>

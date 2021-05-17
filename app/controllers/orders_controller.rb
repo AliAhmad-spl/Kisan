@@ -2,13 +2,15 @@ class OrdersController < ApplicationController
   before_action :set_order, only: %i[show edit update destroy]
 
   def index
-    @orders = current_company.orders.last(8)
+    @orders = current_company.orders.where("created_at >= ? or created_at <= ?", Date.today.beginning_of_day, Date.today.end_of_day)
     @members = current_company.users
     @items = current_company.items
   end
 
   def old
-    @orders = current_company.orders
+    @orders = current_user.company.orders.where("created_at >= ? or created_at <= ?", Date.today.beginning_of_day, Date.today.end_of_day)
+    @cash_today = @orders.cash.sum(:total_amount) + @orders.cheque.sum(:total_amount)
+    
   end
 
   def renew
@@ -51,7 +53,7 @@ class OrdersController < ApplicationController
 
   def create  
     @cart = Cart.find_by(id: params[:id])
-    @order = Order.create(name: params[:name], user_id: current_user.id, company_id: current_user.company.id, status: params[:status])
+    @order = Order.create(name: params[:name], total_amount: @cart.line_items.sum(:sub_total), user_id: current_user.id, company_id: current_user.company.id, status: params[:account_id].present? ? params[:status]: "cash")
     if @cart.line_items.update_all(order_id: @order.id)
       @cart.line_items.each do |e|
         e.item.update(quantity: e.item.quantity - e.quantity)
@@ -59,8 +61,8 @@ class OrdersController < ApplicationController
       @cart.line_items.update_all(cart_id: nil)
     end
     @account = Account.find_by(id: params[:account_id]) if params[:account_id].present?
-    @payment = Payment.create(account_id: params[:account_id], order_id: @order.id, customer_name: params[:name], amount: @order.line_items.sum(:price), status: params[:status], current_balance: @account.remaining_balance + @order.line_items.sum(:price)) if params[:account_id].present?
-    @account.update(total_debit: @account.total_debit + @payment.amount, remaining_balance: @account.remaining_balance + @payment.amount) if params[:account_id].present?
+    @payment = Payment.create(account_id: params[:account_id], order_id: @order.id, customer_name: params[:name], amount: @order.line_items.sum(:sub_total), status: params[:status], current_balance: @order.cash? ? @account.remaining_balance : @account.remaining_balance + @order.line_items.sum(:sub_total)) if params[:account_id].present?
+    @account.update(total_debit: @order.cash? ? @account.total_debit : @account.total_debit + @payment.amount, remaining_balance: @order.cash? ? @account.remaining_balance : @account.remaining_balance + @payment.amount) if params[:account_id].present?
 
     redirect_to order_path(id: @order.id)
     # if Item.find_by_id(params[:order][:item_id]).remaining_quantity >= params[:order][:quantity].to_i

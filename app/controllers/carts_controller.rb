@@ -27,7 +27,7 @@ class CartsController < ApplicationController
   end
 
   def add_to_cart
-    current_cart.add_item(params[:line_item][:item_id], params[:line_item][:quantity])
+    current_cart.add_item(params[:line_item][:item_id], params[:line_item][:quantity], params[:line_item][:price])
     session[:cart_id] = current_cart.id if current_cart.present?
     redirect_to items_path
   end

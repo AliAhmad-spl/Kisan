@@ -8,7 +8,8 @@
       <div class="modal-body">
         <%= form_for LineItem.new, url: add_to_cart_path do |form| %>
           <%= form.hidden_field :item_id %>
-          <%= form.hidden_field :price %>
+          <%= form.label 'Price' %>
+          <%= form.number_field :price, class: 'form-control', min: 0, required: true %>
           <div class="field">
             <%= form.label 'Quantity' %>
             <%= form.number_field :quantity, class: 'form-control', min: 0, required: true, autofocus: true, onchange: "check_item_quantity(this)" %>
